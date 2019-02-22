@@ -1,0 +1,16 @@
+[run]
+omit =
+    */migrations/*
+    .tox/*
+    migration_scripts/*
+    *site-packages*
+
+source = .
+[report]
+omit =
+    */__init__.py
+    env/*
+    */migrations/*
+    .tox/*
+    migration_scripts/*
+    *site-packages*

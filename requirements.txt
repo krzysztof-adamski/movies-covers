@@ -1,0 +1,26 @@
+django==2.1.7
+djangorestframework==3.9.1
+django-debug-toolbar==1.11
+django-extensions==2.1.5
+requests==2.21.0
+mysqlclient==1.4.2.post1
+django-filter
+gunicorn
+django-heroku
+whitenoise
+psycopg2-binary  # python 3.7
+
+
+
+junitxml==0.7
+morelia==0.6.5
+ipdb==0.11
+django-test-without-migrations==0.3
+coverage==4.5.2
+pytest==4.2.1
+pytest-cov==2.6.0
+pytest-random-order==1.0.2
+flake8==3.7.5
+pydocstyle==3.0.0
+docutils
+marshmallow==2.18.1
