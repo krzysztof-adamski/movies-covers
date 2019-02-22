@@ -1,6 +1,6 @@
 # netguru-movies
-
-*netguru-movies is a REST API application to allow on collection information about movies from external provider OMDB http://www.omdbapi.com*
+[https://netguru-movies.herokuapp.com][netguru-movies]
+*netguru-movies is a REST API application witch allow on collection information about movies from external provider OMDB http://www.omdbapi.com*
 
 You can:
 
@@ -111,3 +111,4 @@ make report
    [virtualenvwrapper]: <https://virtualenvwrapper.readthedocs.io/en/latest/>
    [virtualenv]: <https://virtualenv.pypa.io/en/latest/>
    [git-repo-url]: <https://github.com/te0dor/netguru-movies.git>
+   [netguru-movies]: <https://netguru-movies.herokuapp.com>
