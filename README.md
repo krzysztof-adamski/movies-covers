@@ -68,19 +68,40 @@ Here's full specification of endpoints that we'd like it to have:
 You should have installed and configured: *[virtualenv][virtualenv]* or *[virtualenvwrapper][virtualenvwrapper]*
 
 * application reguired OMDB_API_KEY to use external movie OMDB API, grab yourself http://www.omdbapi.com/apikey.aspx
-* clone project from [public repository][dill] on GitHub.
+* clone project from [public repository][git-repo-url] on GitHub.
 * In ***local*** or ***production*** environment set up variables, install the dependencies and start the server.
 ```
 set OMDB_API_KEY=<your_api_key>
 set SECRET_KEY=<any random string>
 set ENV=<local|prod> 
 ```
-*Example in local environmen*:
-
+> some easie instruction to installation on local environment by Makefile:
 ```bash
-git clone 
+git clone https://github.com/te0dor/netguru-movies.git
+cd netguru-movies
+make develop
+make migrations
+make start
 ```
-
+> manual instruction to installation on local environment:
+```bash
+git clone https://github.com/te0dor/netguru-movies.git
+cd netguru-movies
+virtualenv --python=python3 env
+source env/bin/activate
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+> run test:
+```bash
+make test
+```
+> check report:
+```bash
+make report
+```
 
 ### Todos
 
@@ -89,4 +110,4 @@ git clone
 
    [virtualenvwrapper]: <https://virtualenvwrapper.readthedocs.io/en/latest/>
    [virtualenv]: <https://virtualenv.pypa.io/en/latest/>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
+   [git-repo-url]: <https://github.com/te0dor/netguru-movies.git>
