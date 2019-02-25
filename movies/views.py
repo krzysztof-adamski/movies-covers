@@ -1,5 +1,6 @@
 from django_filters import FilterSet, NumberFilter
 from django_filters.rest_framework import DjangoFilterBackend
+
 from django.db.models import Count
 
 from rest_framework import (
@@ -74,12 +75,11 @@ class CommentsListView(generics.ListAPIView):
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    filter_backends = (DjangoFilterBackend,)
     filter_fields = ('movie__id',)
 
     def post(self, request, format=None):
         serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -91,11 +91,9 @@ class TopRankMoviesListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     filter_class = YearRangeFilter
     serializer_class = TopRankMovieSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('min_year', 'max_year')
     queryset = Movie.objects.annotate(
         comment_count=Count('comments'),
-    )
+    ).order_by('-comment_count')
     search_fields = ('year',)
 
     def get_rank(self, data=[], comments=1):
@@ -115,8 +113,7 @@ class TopRankMoviesListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             return data[-1]['rank'] + 1
 
     def list(self, request):
-        queryset = self.get_queryset().order_by('-comment_count')
-        f = YearRangeFilter(request.GET, queryset=queryset)
+        f = self.filter_class(request.GET, queryset=self.get_queryset())
         data = []
         for movie in f.qs:
             data.extend([{
@@ -125,5 +122,6 @@ class TopRankMoviesListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                 'rank': self.get_rank(data, movie.comment_count),
                 'year': movie.year
             }])
-        serializer = TopRankMovieSerializer(data, many=True)
-        return Response(serializer.data)
+        serializer = TopRankMovieSerializer(data=data, many=True)
+        if serializer.is_valid(raise_exception=True):
+            return Response(serializer.data)

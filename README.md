@@ -58,6 +58,26 @@ Here's full specification of endpoints that we'd like it to have:
     ]
     ```
 
+### Filters, searching, params API endpoints
+
+    GET /api/movies/?title=<title>
+        - return movie by title
+    GET /api/movies/?ordering=-year
+        - sort desc by movie year
+    GET /api/movies/?ordering=year
+        - sort asc by movie year
+    GET /api/movies/?ordering=-title
+        - sort desc by movie title
+    GET /api/movies/?ordering=title
+        - sort asc by movie title
+
+    GET /api/comments/?movie__id=<movie_id>
+        - search comment by movie_id
+
+    GET /api/top/?since=1991&to=1992
+        - range filter by movie year
+
+
 ### Rules & hints:
 1. Your goal is to implement REST API in Django, however you're free to use any third-party libraries and database of your choice, but please share your reasoning behind choosing them.
 2. At least basic tests of endpoints and their functionality are obligatory. Their exact scope and form is left up to you.

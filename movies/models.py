@@ -13,6 +13,9 @@ class Movie(models.Model):
     description = models.TextField(
         null=True, blank=True, help_text="Movie plot")
 
+    class Meta:
+        ordering = ['title']
+
     def __str__(self):
         return "{} - {}".format(self.title, self.year)
 
@@ -32,7 +35,6 @@ class Comment(models.Model):
     message = models.CharField(max_length=255, help_text="Comment of movie")
 
     class Meta:
-        #  unique_together = ('movie', 'message')
         ordering = ['movie']
 
     def __repr__(self):

@@ -1,6 +1,7 @@
+from movies.models import Comment, Movie
+
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from movies.models import Movie, Comment
 
 
 class MovieSerializer(serializers.ModelSerializer):

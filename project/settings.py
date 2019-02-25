@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import sys
+import django_heroku
 
 ENV = os.getenv('ENV', 'local')
 
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '.herokuapp.com',
     '109.231.11.84',
+    'netguru-movies.herokuapp.com',
 ]
 
 
@@ -144,13 +145,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 API_OMD_CONFIG = {
     'API_KEY': os.environ.get('OMDB_API_KEY'),
@@ -165,7 +160,4 @@ if ENV == 'prod':
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-if 'test' in sys.argv:
-    for key in DATABASES.keys():
-        DATABASES[key]['ENGINE'] = 'django.db.backends.sqlite3'
-        DATABASES[key]['NAME'] = '%s.db' % key
+django_heroku.settings(locals())

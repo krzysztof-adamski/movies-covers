@@ -1,6 +1,7 @@
+SHELL := /bin/bash
 PWD := $(shell pwd)
 PROJECT_NAME := movies
-PROJECT_LOCAL_PORT := 8000
+PROJECT_LOCAL_PORT := 8080
 WORKON_HOME := env
 APP_PATH := $(PWD)
 ENV_PATH := $(APP_PATH)/$(WORKON_HOME)
@@ -34,12 +35,11 @@ export PRINT_HELP_PYSCRIPT
 help:
 	@-python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-test:  ## uruchamia testy w środowisku wirtualnym
+test: ## uruchamia testy w środowisku wirtualnym
 	@-mkdir -p .reports
-	coverage run --source='.' manage.py test -p="test_*.py" --keepdb
+	@-source ${ENV_PATH}/bin/activate && coverage run ./manage.py test -p="test_*.py"
 
 report:  ## generuje raport pokrycia kodu testami
-	@-rm -rf htmlcov/
 	@-coverage xml -o .reports/coverage.xml
 	@-coverage report -m
 	@-coverage html
@@ -48,11 +48,11 @@ codestyle: ## przeprowadza analizę statyczną kodu
 	@-flake8 .
 
 docstyle:  ## sprawdza jakość dokumentacji
-	pydocstyle --ignore=D205,D211,D212,D400 . 2>/dev/null || true
+	pydocstyle --ignore=D205,D211,D212,D400 .  2>/dev/null || true
 
 start:  ## uruchamia serwer lokalny
-	@-echo -e "${YELLOW}Uruchamiam lokalny serwer${NC}"
-	@-python manage.py runserver ${PROJECT_LOCAL_PORT}
+	echo -e "${YELLOW}Uruchamiam lokalny serwer${NC}"
+	python manage.py runserver
 
 collectstatic:  ## Wgrywanie statykow
 	@-python manage.py collectstatic --noinput 2>/dev/null || true
@@ -91,7 +91,7 @@ create-dbase:  ## tworzy baze z userem z env
 	@-echo "Zatwierdź hasłem superuser mysql"
 	@-echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" | mysql -u root -p
 
-develop: ## tworzy lokalnie środowisko virtualne
+develop:  ## tworzy lokalnie środowisko virtualne
 	@-rm -rf ${WORKON_HOME}
 	@-virtualenv --python=python3 ${WORKON_HOME}  #  virtualenv --python=python3 .venv
 	@-source ${ENV_PATH}/bin/activate

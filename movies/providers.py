@@ -1,7 +1,7 @@
-import requests
-from requests.exceptions import Timeout, ConnectionError
-
 from django.conf import settings
+
+import requests
+from requests.exceptions import ConnectionError, Timeout
 
 from .exceptions import CommunicationError, ObjectDoesNotExist
 from .schemas import OmdbMovieSchema
