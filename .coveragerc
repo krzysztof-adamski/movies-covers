@@ -5,7 +5,7 @@ omit =
     migration_scripts/*
     *site-packages*
 
-source = .
+source = ./movies
 [report]
 omit =
     */__init__.py

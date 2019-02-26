@@ -16,7 +16,7 @@ GREEN := \u001b[0;32m
 YELLOW := \u001b[1;33m
 
 .PHONY: docs
-export PATH := $(WORKON_HOME)/bin:$(PATH)
+export PATH := $(PATH):$(WORKON_HOME)/bin
 export PYTHONPATH := $(WORKON_HOME)/bin
 export ENV_PATH := $(APP_PATH)/$(WORKON_HOME)
 .DEFAULT_GOAL := help
@@ -37,7 +37,7 @@ help:
 
 test: ## uruchamia testy w środowisku wirtualnym
 	@-mkdir -p .reports
-	@-source ${ENV_PATH}/bin/activate && coverage run ./manage.py test -p="test_*.py"
+	@-source ${ENV_PATH}/bin/activate && coverage run ./manage.py test ${PROJECT_NAME} #  -p="test_*.py"
 
 report:  ## generuje raport pokrycia kodu testami
 	@-coverage xml -o .reports/coverage.xml
