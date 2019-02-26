@@ -4,13 +4,18 @@ omit =
     .tox/*
     migration_scripts/*
     *site-packages*
+    tests.py
+    apps.py
+    settins.py
 
 source = ./movies
 [report]
 omit =
-    */__init__.py
-    env/*
     */migrations/*
     .tox/*
     migration_scripts/*
     *site-packages*
+    tests.py
+    apps.py
+    settins.py
+    

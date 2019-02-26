@@ -19,6 +19,7 @@ YELLOW := \u001b[1;33m
 export PATH := $(PATH):$(WORKON_HOME)/bin
 export PYTHONPATH := $(WORKON_HOME)/bin
 export ENV_PATH := $(APP_PATH)/$(WORKON_HOME)
+export DJANGO_SETTINGS_MODULE=project.settings
 .DEFAULT_GOAL := help
 
 define PRINT_HELP_PYSCRIPT
@@ -37,7 +38,9 @@ help:
 
 test: ## uruchamia testy w środowisku wirtualnym
 	@-mkdir -p .reports
-	@-source ${ENV_PATH}/bin/activate && coverage run ./manage.py test ${PROJECT_NAME} #  -p="test_*.py"
+	## @-source ${ENV_PATH}/bin/activate && coverage run ./manage.py test ${PROJECT_NAME} #  -p="test_*.py"
+	## @-source ${ENV_PATH}/bin/activate && pytest tests
+	@-pytest
 
 report:  ## generuje raport pokrycia kodu testami
 	@-coverage xml -o .reports/coverage.xml

@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import django_heroku
+import django
+
 
 ENV = os.getenv('ENV', 'local')
 
@@ -48,8 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'django_extensions',
-    'rest_framework',
     'django_filters',
+    'rest_framework',
     'movies.apps.MoviesConfig',
 ]
 
@@ -160,4 +161,4 @@ if ENV == 'prod':
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-django_heroku.settings(locals())
+django.setup()
